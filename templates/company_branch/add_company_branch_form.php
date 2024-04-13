@@ -68,14 +68,14 @@
 </head>
 
 <body>
-    <form>
+    <form method="post">
         <div>
             <label for="city">City</label>
             <input type="text" name="city" id="city" required maxlength="100" />
         </div>
         <div>
             <label for="Address">Address</label>
-            <input type="text" name="Address" id="Address" required maxlength="100" />
+            <input type="text" name="company_address" id="address" required maxlength="100" />
         </div>
         <?php if ($errorMessage): ?>
             <div>

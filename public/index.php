@@ -13,7 +13,7 @@ function showCompmanyBranches(): void
 
     $company_branches = getAllCompanyBranches($connection);
 
-    echo renderView('company_branches.php', [
+    echo renderView('company_branch/company_branches.php', [
         'company_branches' => $company_branches
     ]);
 }

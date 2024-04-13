@@ -72,14 +72,10 @@ function saveCompanyBranchToDatabase(PDO $connection, array $companyBranchData):
  *     employee_amount:int,
  * }|null
  */
-function findComnanyBranchInDatabase(PDO $connection, int $id): ?array
+function deleteComnanyBranchInDatabase(PDO $connection, int $id): ?array
 {
     $query = <<<SQL
-        SELECT
-            id,
-            city,
-            company_address,
-            employee_amount,
+        DELETE
         FROM company_branch
         WHERE id = $id
         SQL;

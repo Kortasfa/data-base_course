@@ -1,25 +1,6 @@
-<?php
-/**
- * @var array{
- *   id: int,
- *   city: string,
- *   company_address: string,
- *   employee_amount: int,
- * }[] $company_branches
- */
-
-/**
- * @param int $branchId
- * @return string
- */
-function getPostPageUrl(int $branchId): string
-{
-    return "/show_post.php?post_id=$branchId";
-}
-
-?>
 <!DOCTYPE html>
 <html lang="ru">
+
 <head>
     <title>Company Branches</title>
     <meta charset="utf-8">
@@ -39,6 +20,10 @@ function getPostPageUrl(int $branchId): string
 
         th {
             background-color: #f2f2f2;
+        }
+
+        td:last-child {
+            border: none
         }
 
         button {
@@ -71,21 +56,18 @@ function getPostPageUrl(int $branchId): string
     <table>
         <thead>
             <tr>
-                <th>ID</th>
                 <th>City</th>
                 <th>Address</th>
                 <th>Employee Amount</th>
-                <th></th>
             </tr>
         </thead>
         <tbody>
             <?php foreach ($company_branches as $branch): ?>
                 <tr>
-                    <td><a href="<?= getPostPageUrl($branch['id']) ?>"><?= $branch['id'] ?></a></td>
                     <td><?= htmlentities($branch['city']) ?></td>
                     <td><?= htmlentities($branch['company_address']) ?></td>
                     <td><?= htmlentities($branch['employee_amount']) ?></td>
-                    <td><img src='img/delete.png' /></td>
+                    <td><img class='delete' src='img/delete.png' data-id="<?= $branch['id'] ?>" /></td>
                 </tr>
             <?php endforeach; ?>
         </tbody>
@@ -93,6 +75,27 @@ function getPostPageUrl(int $branchId): string
     <button>
         <a href="add_company_branch.php">Add New Branch</a>
     </button>
+    <script>
+        var deleteButtons = document.querySelectorAll('.delete');
+
+        deleteButtons.forEach(function (button) {
+            button.addEventListener('click', function () {
+                var branchId = this.getAttribute('data-id');
+
+                var xhr = new XMLHttpRequest();
+                xhr.open('POST', 'delete_company_branch.php', true);
+                xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+                xhr.onload = function () {
+                    if (xhr.status === 200) {
+                        location.reload();
+                    } else {
+                        console.error('Ошибка удаления филиала');
+                    }
+                };
+                xhr.send('branch_id=' + encodeURIComponent(branchId));
+            });
+        });
+    </script>
 </body>
 
 </html>

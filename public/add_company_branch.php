@@ -12,14 +12,13 @@ const POST_ID_PARAM = 'post_id';
 
 function showAddPostForm(?string $errorMessage = null): void
 {
-    echo renderView('add_company_branch_form.php', [
+    echo renderView('company_branch/add_company_branch_form.php', [
         'errorMessage' => $errorMessage
     ]);
 }
 
 function handleAddPostForm(): void
 {
-    // Разбор параметров формы
     $city = $_POST['city'] ?? null;
     $companyAddress = $_POST['company_address'] ?? null;
     if (!$city || !$companyAddress)
@@ -29,16 +28,15 @@ function handleAddPostForm(): void
         return;
     }
 
-    // Сохранение параметров изображения в базу данных
     $connection = connectDatabase();
 
-    $postId = saveCompanyBranchToDatabase($connection, [
+    saveCompanyBranchToDatabase($connection, [
         'city' => $city,
         'company_address' => $companyAddress,
         'employee_amount' => 0
     ]);
 
-    header('Location: '. 'public/index.php');
+    writeRedirectSeeOther("index.php");
 }
 
 try
