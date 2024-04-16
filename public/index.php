@@ -12,9 +12,11 @@ function showCompmanyBranches(): void
     $connection = connectDatabase();
 
     $company_branches = getAllCompanyBranches($connection);
+    $employee_amount = countStudentAmount($connection);
 
     echo renderView('company_branch/company_branches.php', [
-        'company_branches' => $company_branches
+        'company_branches' => $company_branches,
+        'employee_amount' => $employee_amount,
     ]);
 }
 

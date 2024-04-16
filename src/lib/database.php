@@ -211,6 +211,14 @@ function findEmployeeInDatabase(PDO $connection, int $id): ?array
     return $row ?: null;
 }
 
+
+/**
+ * Удаляет сотрудника филиала компании из базы данных.
+ *
+ * @param PDO $connection
+ * @param int $id
+ * @return void
+ */
 function deleteEmployeeInDatabase(PDO $connection, int $id): void
 {
     $query = <<<SQL
@@ -241,4 +249,47 @@ function findAllEmployeesFromCompanyBranch(PDO $connection, int $id): ?array
     $statement->execute([':id' => $id]);
 
     return $statement->fetchAll(PDO::FETCH_ASSOC);
+}
+
+/**
+ * Считает всех сотрудников филиала компании из базы данных.
+ *
+ * @param PDO $connection
+ * @param int $id
+ * @return int
+ */
+function countAllEmployeesFromCompanyBranch(PDO $connection, int $id): int
+{
+    $query = <<<SQL
+    SELECT COUNT(id) AS employee_count
+    FROM employee
+    WHERE company_branch_id = :id
+    SQL;
+    $statement = $connection->prepare($query);
+    $statement->execute([':id' => $id]);
+
+    $result = $statement->fetch(PDO::FETCH_ASSOC);
+    return $result['employee_count'];
+}
+
+/**
+ * Получает все существующие филиалы компании из базы данных.
+ *
+ * @param PDO $connection
+ *
+ * @return array
+ */
+function countStudentAmount(PDO $connection): array
+{
+    $query = <<<SQL
+    SELECT company_branch_id, COUNT(id) AS employee_count
+    FROM employee
+    GROUP BY company_branch_id
+    SQL;
+    $statement = $connection->query($query);
+    $result = [];
+    while ($row = $statement->fetch(PDO::FETCH_ASSOC)) {
+        $result[$row['company_branch_id']] = $row['employee_count'];
+    }
+    return $result;
 }

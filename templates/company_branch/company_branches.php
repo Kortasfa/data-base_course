@@ -56,7 +56,7 @@ function getBranchCompanyCard(int $id): string
                         </td>
                         <td><?= htmlentities($branch['city']) ?></td>
                         <td><?= htmlentities($branch['company_address']) ?></td>
-                        <td><?= htmlentities($branch['employee_amount']) ?></td>
+                        <td><?= htmlentities($employee_amount[$branch['id']]) ?></td>
                         <td><img class='delete' src='img/delete.png' data-id="<?= $branch['id'] ?>" /></td>
                     </tr>
                 <?php endforeach; ?>

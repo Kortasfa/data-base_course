@@ -17,6 +17,7 @@ function handleShowCompanyBranch(): void
 
     $connection = connectDatabase();
     $branchData = findComnanyBranchInDatabase($connection, (int)$companyBranchId);
+    $employeeAmount = countAllEmployeesFromCompanyBranch($connection, (int)$companyBranchId);
 
     $employeeData = findAllEmployeesFromCompanyBranch($connection, (int)$companyBranchId);
     if (!$branchData)
@@ -30,7 +31,7 @@ function handleShowCompanyBranch(): void
             'company_branch_id' => $companyBranchId,
             'city' => $branchData['city'],
             'company_address' => $branchData['company_address'],
-            'employee_amount' => $branchData['employee_amount'],
+            'employee_amount' => $employeeAmount,
         ],
         'employee_data' => $employeeData,
     ]);

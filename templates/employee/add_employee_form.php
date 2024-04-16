@@ -14,14 +14,13 @@
 </head>
 
 <body>
-<?php
+    <?php
     $links = array(
         "Вернуться" => "show_branch_company_card.php?company_branch_id=$company_branch_id"
     );
-    require (__DIR__ . '/../navigation_bar.php') 
-    ?>
+    require (__DIR__ . '/../navigation_bar.php') ?>
     <form method="post">
-    <div>
+        <div>
             <label for="name">Name</label>
             <input type="text" name="name" id="name" required maxlength="100" />
         </div>
