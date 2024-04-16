@@ -7,7 +7,7 @@
 <html lang="ru">
 
 <head>
-    <title>Add Company Branch</title>
+    <title>Добавить филиал</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="/../public/css/main.css">
@@ -22,11 +22,11 @@
     ?>
     <form method="post">
         <div>
-            <label for="city">City</label>
+            <label for="city">Город</label>
             <input type="text" name="city" id="city" required maxlength="100" />
         </div>
         <div>
-            <label for="Address">Address</label>
+            <label for="Address">Адрес</label>
             <input type="text" name="company_address" id="address" required maxlength="100" />
         </div>
         <?php if ($errorMessage): ?>

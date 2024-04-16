@@ -23,7 +23,7 @@ function getBranchCompanyCard(int $id): string
 <html lang="ru">
 
 <head>
-    <title>Company Branches</title>
+    <title>Филиалы компании</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="/../public/css/main.css">
@@ -32,7 +32,7 @@ function getBranchCompanyCard(int $id): string
 <body>
     <?php
     $links = array(
-        "Добавить ветку" => "add_company_branch.php"
+        "Добавить филиал" => "add_company_branch.php"
     );
     require (__DIR__ . '/../navigation_bar.php') 
     ?>
@@ -40,10 +40,10 @@ function getBranchCompanyCard(int $id): string
         <table>
             <thead>
                 <tr>
-                    <th>Id</th>
-                    <th>City</th>
-                    <th>Address</th>
-                    <th>Employee Amount</th>
+                    <th>Идентификатор</th>
+                    <th>Город</th>
+                    <th>Адрес</th>
+                    <th>Количество сотрудников</th>
                 </tr>
             </thead>
             <tbody>

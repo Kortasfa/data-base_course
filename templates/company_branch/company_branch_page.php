@@ -28,23 +28,23 @@ function getEmployeeCard(int $employeeId, int $companyBranchId): string
     require (__DIR__ . '/../navigation_bar.php') ?>
     <div class="container">
         <div class="info-item">
-            <span class="info-label">City:</span>
+            <span class="info-label">Город:</span>
             <span class="info-value"><?= htmlentities($company_branch['city']) ?></span>
         </div>
         <div class="info-item">
-            <span class="info-label">Address:</span>
+            <span class="info-label">Адрес:</span>
             <span class="info-value"><?= htmlentities($company_branch['company_address']) ?></span>
         </div>
         <div class="info-item">
-            <span class="info-label">Employee Amount:</span>
+            <span class="info-label">Количество сотрудников:</span>
             <span class="info-value"><?= htmlentities($company_branch['employee_amount']) ?></span>
         </div>
         <table>
             <thead>
                 <tr>
-                    <th>Id</th>
-                    <th>Name</th>
-                    <th>Job</th>
+                    <th>Идентификатор</th>
+                    <th>Имя</th>
+                    <th>Должность</th>
                 </tr>
             </thead>
             <tbody>

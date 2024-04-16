@@ -50,31 +50,31 @@
     require (__DIR__ . '/../navigation_bar.php') ?>
     <div class="container">
         <div class="info-item">
-            <span class="info-label">Name:</span>
+            <span class="info-label">Имя:</span>
             <span class="info-value"><?= htmlentities($employee['name']) ?></span>
         </div>
         <div class="info-item">
-            <span class="info-label">Job:</span>
+            <span class="info-label">Должность:</span>
             <span class="info-value"><?= htmlentities($employee['job']) ?></span>
         </div>
         <div class="info-item">
-            <span class="info-label">Email:</span>
+            <span class="info-label">Электронная почта:</span>
             <span class="info-value"><?= htmlentities($employee['email']) ?></span>
         </div>
         <div class="info-item">
-            <span class="info-label">Gender:</span>
+            <span class="info-label">Пол:</span>
             <span class="info-value"><?= ($employee['gender']) ? 'male' : 'femal' ?></span>
         </div>
         <div class="info-item">
-            <span class="info-label">Birth date:</span>
+            <span class="info-label">Дата рождения:</span>
             <span class="info-value"><?= htmlentities($employee['birth_date']) ?></span>
         </div>
         <div class="info-item">
-            <span class="info-label">Hire date:</span>
+            <span class="info-label">Дата найма:</span>
             <span class="info-value"><?= htmlentities($employee['hire_date']) ?></span>
         </div>
         <div class="info-item">
-            <span class="info-label">Admin comment:</span>
+            <span class="info-label">Комментарий:</span>
             <span class="info-value"><?= htmlentities($employee['admin_comment']) ?></span>
         </div>
     </div>
