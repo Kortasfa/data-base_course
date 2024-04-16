@@ -1,3 +1,24 @@
+<?php
+/**
+ * @var array{
+ *   id: int,
+ *   city: string,
+ *   company_address: string,
+ *   employee_amount: int,
+ * }[] $company_branches
+ */
+
+/**
+ * @param int $id
+ * @return string
+ */
+function getBranchCompanyCard(int $id): string
+{
+    return "/public/show_branch_company_card.php?company_branch_id=$id";
+}
+
+?>
+
 <!DOCTYPE html>
 <html lang="ru">
 
@@ -5,84 +26,51 @@
     <title>Company Branches</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <style>
-        table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-
-        th,
-        td {
-            border: 1px solid #dddddd;
-            text-align: left;
-            padding: 8px;
-        }
-
-        th {
-            background-color: #f2f2f2;
-        }
-
-        td:last-child {
-            border: none
-        }
-
-        button {
-            background-color: #4CAF50;
-            border: none;
-            color: white;
-            padding: 10px 20px;
-            text-align: center;
-            text-decoration: none;
-            display: inline-block;
-            font-size: 16px;
-            margin: 10px 0;
-            cursor: pointer;
-            border-radius: 5px;
-        }
-
-        img {
-            vertical-align: middle;
-            height: 20px;
-            width: auto;
-        }
-
-        a {
-            text-decoration: none;
-        }
-    </style>
+    <link rel="stylesheet" href="/../public/css/main.css">
 </head>
 
 <body>
-    <table>
-        <thead>
-            <tr>
-                <th>City</th>
-                <th>Address</th>
-                <th>Employee Amount</th>
-            </tr>
-        </thead>
-        <tbody>
-            <?php foreach ($company_branches as $branch): ?>
+    <?php
+    $links = array(
+        "Добавить ветку" => "add_company_branch.php"
+    );
+    require (__DIR__ . '/../navigation_bar.php') 
+    ?>
+    <div class="container">
+        <table>
+            <thead>
                 <tr>
-                    <td><?= htmlentities($branch['city']) ?></td>
-                    <td><?= htmlentities($branch['company_address']) ?></td>
-                    <td><?= htmlentities($branch['employee_amount']) ?></td>
-                    <td><img class='delete' src='img/delete.png' data-id="<?= $branch['id'] ?>" /></td>
+                    <th>Id</th>
+                    <th>City</th>
+                    <th>Address</th>
+                    <th>Employee Amount</th>
                 </tr>
-            <?php endforeach; ?>
-        </tbody>
-    </table>
-    <button>
-        <a href="add_company_branch.php">Add New Branch</a>
-    </button>
+            </thead>
+            <tbody>
+                <?php foreach ($company_branches as $branch): ?>
+                    <tr>
+                        <td>
+                            <a href="<?= getBranchCompanyCard($branch['id']) ?>">
+                                <?= htmlentities($branch['id']) ?>
+                            </a>
+                        </td>
+                        <td><?= htmlentities($branch['city']) ?></td>
+                        <td><?= htmlentities($branch['company_address']) ?></td>
+                        <td><?= htmlentities($branch['employee_amount']) ?></td>
+                        <td><img class='delete' src='img/delete.png' data-id="<?= $branch['id'] ?>" /></td>
+                    </tr>
+                <?php endforeach; ?>
+            </tbody>
+        </table>
+    </div>
     <script>
-        var deleteButtons = document.querySelectorAll('.delete');
+        const deleteButtons = document.querySelectorAll('.delete');
 
         deleteButtons.forEach(function (button) {
             button.addEventListener('click', function () {
-                var branchId = this.getAttribute('data-id');
+                const branchId = this.getAttribute('data-id');
 
-                var xhr = new XMLHttpRequest();
+                const xhr = new XMLHttpRequest();
                 xhr.open('POST', 'delete_company_branch.php', true);
                 xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
                 xhr.onload = function () {

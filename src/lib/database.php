@@ -72,6 +72,37 @@ function saveCompanyBranchToDatabase(PDO $connection, array $companyBranchData):
  *     employee_amount:int,
  * }|null
  */
+function findComnanyBranchInDatabase(PDO $connection, int $id): ?array
+{
+    $query = <<<SQL
+        SELECT
+            id,
+            city,
+            company_address,
+            employee_amount
+        FROM company_branch
+        WHERE id = $id
+        SQL;
+
+    $statement = $connection->query($query);
+    $row = $statement->fetch(PDO::FETCH_ASSOC);
+
+    return $row ?: null;
+}
+
+/**
+ * Извлекает из БД данные поста с указанным ID.
+ * Возвращает null, если пост не найден
+ *
+ * @param PDO $connection
+ * @param int $id
+ * @return array{
+ *     id:int,
+ *     city:string,
+ *     company_address:string,
+ *     employee_amount:int,
+ * }|null
+ */
 function deleteComnanyBranchInDatabase(PDO $connection, int $id): ?array
 {
     $query = <<<SQL
@@ -106,10 +137,11 @@ function getAllCompanyBranches(PDO $connection): array
  * @param PDO $connection
  * @param array{
  *     company_branch_id:int,
+ *     name:string,
  *     job:string,
  *     gender:bool,
  *     email:string,
- *     birth_date:string,
+ *     x:string,
  *     hire_date:string,
  *     admin_comment:?string
  * } $employeeData
@@ -119,15 +151,16 @@ function getAllCompanyBranches(PDO $connection): array
 function saveEmployeeToDatabase(PDO $connection, array $employeeData): int
 {
     $query = <<<SQL
-        INSERT INTO employee (company_branch_id, job, gender, email, birth_date, hire_date, admin_comment)
-        VALUES (:company_branch_id, :job, :gender, :email, :birth_date, :hire_date, :admin_comment)
+        INSERT INTO employee (company_branch_id, name, job, gender, email, birth_date, hire_date, admin_comment)
+        VALUES (:company_branch_id, :name, :job, :gender, :email, :birth_date, :hire_date, :admin_comment)
         SQL;
 
     $statement = $connection->prepare($query);
     $statement->execute([
         ':company_branch_id' => $employeeData['company_branch_id'],
+        ':name' => $employeeData['name'],
         ':job' => $employeeData['job'],
-        ':gender' => $employeeData['gender'] ? 1 : 0,
+        ':gender' => $employeeData['gender'],
         ':email' => $employeeData['email'],
         ':birth_date' => $employeeData['birth_date'],
         ':hire_date' => $employeeData['hire_date'],
@@ -146,6 +179,7 @@ function saveEmployeeToDatabase(PDO $connection, array $employeeData): int
  * @return array{
  *     id: int,
  *     company_branch_id:int,
+ *     name:string,
  *     job:string,
  *     gender:bool,
  *     email:string,
@@ -160,6 +194,7 @@ function findEmployeeInDatabase(PDO $connection, int $id): ?array
         SELECT
             id,
             company_branch_id,
+            name,
             job,
             gender,
             email,
@@ -176,6 +211,18 @@ function findEmployeeInDatabase(PDO $connection, int $id): ?array
     return $row ?: null;
 }
 
+function deleteEmployeeInDatabase(PDO $connection, int $id): void
+{
+    $query = <<<SQL
+        DELETE
+        FROM employee
+        WHERE id = $id
+        SQL;
+
+    $statement = $connection->query($query);
+    $row = $statement->fetch(PDO::FETCH_ASSOC);
+}
+
 /**
  * Получает всех сотрудников филиала компании из базы данных.
  *
@@ -183,7 +230,7 @@ function findEmployeeInDatabase(PDO $connection, int $id): ?array
  * @param int $id
  * @return array
  */
-function findAllEmployeesFromCompanyBranche(PDO $connection, int $id): ?array
+function findAllEmployeesFromCompanyBranch(PDO $connection, int $id): ?array
 {
     $query = <<<SQL
     SELECT *
