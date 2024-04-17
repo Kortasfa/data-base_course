@@ -28,6 +28,10 @@
             transition: background-color 0.3s ease;
         }
 
+        div.navigation span {
+            color: white;
+        }
+
         div.navigation a:hover {
             background-color: #555;
         }
@@ -41,11 +45,18 @@
 
 <body>
     <div class="navigation">
-        <?php foreach ($links as $title => $url) {
+        <?php 
+        $count = count($links);
+        $i = 0;
+        foreach ($links as $title => $url) {
             echo '<a href="' . $url . '"><span>' . $title . '</span></a>';
+            if (++$i !== $count) {
+                echo '<span> > </span>';
+            }
         }
         ?>
     </div>
 </body>
+
 
 </html>

@@ -22,19 +22,22 @@ function getEmployeeCard(int $employeeId, int $companyBranchId): string
 <body>
     <?php
     $links = array(
-        "Вернуться" => "index.php",
-        "Добавить сотрудника" => "add_employee.php?company_branch_id={$company_branch['company_branch_id']}",
+        "Филиалы" => "index.php",
+        "{$company_branch['city']}, {$company_branch['company_address']}" => "",
     );
     require (__DIR__ . '/../navigation_bar.php') ?>
     <div class="container">
         <form method="post">
             <div>
                 <label for="city">Город</label>
-                <input type="text" name="city" value="<?= htmlentities($company_branch['city']) ?>" id="city" required maxlength="100" />
+                <input type="text" name="city" value="<?= htmlentities($company_branch['city']) ?>" id="city" required
+                    maxlength="100" />
             </div>
             <div>
                 <label for="Address">Адрес</label>
-                <input type="text" name="company_address" value="<?= htmlentities($company_branch['company_address']) ?>" id="address" required maxlength="100" />
+                <input type="text" name="company_address"
+                    value="<?= htmlentities($company_branch['company_address']) ?>" id="address" required
+                    maxlength="100" />
             </div>
             <div class="info-item">
                 <span class="info-label">Количество сотрудников:</span>
@@ -52,19 +55,13 @@ function getEmployeeCard(int $employeeId, int $companyBranchId): string
         <table>
             <thead>
                 <tr>
-                    <th>Идентификатор</th>
                     <th>Имя</th>
                     <th>Должность</th>
                 </tr>
             </thead>
             <tbody>
                 <?php foreach ($employee_data as $employee): ?>
-                    <tr>
-                        <td>
-                            <a href="<?= getEmployeeCard($employee['id'], $company_branch['company_branch_id']) ?>">
-                                <?= htmlentities($employee['id']) ?>
-                            </a>
-                        </td>
+                    <tr onclick="window.location='<?= getEmployeeCard($employee['id'], $company_branch['company_branch_id']) ?>'">
                         <td><?= htmlentities($employee['name']) ?></td>
                         <td><?= htmlentities($employee['job']) ?></td>
                         <td><img class='delete' src='img/delete.png' data-id="<?= $employee['id'] ?>" /></td>
@@ -72,6 +69,11 @@ function getEmployeeCard(int $employeeId, int $companyBranchId): string
                 <?php endforeach; ?>
             </tbody>
         </table>
+        <button>
+            <a href="add_employee.php?company_branch_id=<?= $company_branch['company_branch_id'] ?>">Добавить
+                сотрудника</a>
+        </button>
+
     </div>
     <script>
         const deleteButtons = document.querySelectorAll('.delete');

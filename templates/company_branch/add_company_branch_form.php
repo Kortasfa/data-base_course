@@ -16,7 +16,8 @@
 <body>
 <?php
     $links = array(
-        "Вернуться" => "index.php",
+        "Филиалы" => "index.php",
+        "Добавление филиала" => "",
     );
     require (__DIR__ . '/../navigation_bar.php') 
     ?>

@@ -17,6 +17,7 @@ body {
 table {
     width: 100%;
     border-collapse: collapse;
+    margin-bottom: 20px;
 }
 
 th,
@@ -40,12 +41,13 @@ img {
     width: auto;
 }
 
-img:hover {
+img, tr:hover {
     cursor: pointer;
 }
 
 a {
     text-decoration: none;
+    color: white;
 }
 
 .info-item {
@@ -87,7 +89,7 @@ input, select, textarea {
     margin-bottom: 10px;
 }
 
-button[type="submit"] {
+button {
     background-color: #4CAF50;
     color: white;
     padding: 10px 20px;
@@ -98,7 +100,7 @@ button[type="submit"] {
     margin-bottom: 10px;
 }
 
-button[type="submit"]:hover {
+button:hover {
     background-color: #45a049;
 }
 

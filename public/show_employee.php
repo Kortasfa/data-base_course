@@ -16,6 +16,7 @@ function showEmployeePostForm(?string $errorMessage = null): void
     }
 
     $connection = connectDatabase();
+    $branchData = findComnanyBranchInDatabase($connection, (int) $company_branch_id);
 
     $employeeData = findEmployeeInDatabase($connection, (int) $employeeId);
     if (!$employeeData) {
@@ -33,7 +34,11 @@ function showEmployeePostForm(?string $errorMessage = null): void
             'hire_date' => $employeeData['hire_date'],
             'admin_comment' => $employeeData['admin_comment'],
         ],
-        'company_branch_id' => $company_branch_id,
+        'company_branch' => [
+            'company_branch_id' => $company_branch_id,
+            'city' => $branchData['city'],
+            'company_address' => $branchData['company_address']
+        ]
     ]);
 }
 

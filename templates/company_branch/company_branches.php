@@ -32,15 +32,14 @@ function getBranchCompanyCard(int $id): string
 <body>
     <?php
     $links = array(
-        "Добавить филиал" => "add_company_branch.php"
+        "Филиалы" => ""
     );
-    require (__DIR__ . '/../navigation_bar.php') 
-    ?>
+    require (__DIR__ . '/../navigation_bar.php')
+        ?>
     <div class="container">
         <table>
             <thead>
                 <tr>
-                    <th>Идентификатор</th>
                     <th>Город</th>
                     <th>Адрес</th>
                     <th>Количество сотрудников</th>
@@ -48,12 +47,7 @@ function getBranchCompanyCard(int $id): string
             </thead>
             <tbody>
                 <?php foreach ($company_branches as $branch): ?>
-                    <tr>
-                        <td>
-                            <a href="<?= getBranchCompanyCard($branch['id']) ?>">
-                                <?= htmlentities($branch['id']) ?>
-                            </a>
-                        </td>
+                    <tr onclick="window.location='<?= getBranchCompanyCard($branch['id']) ?>'">
                         <td><?= htmlentities($branch['city']) ?></td>
                         <td><?= htmlentities($branch['company_address']) ?></td>
                         <td><?= htmlentities($employee_amount[$branch['id']]) ?></td>
@@ -62,6 +56,9 @@ function getBranchCompanyCard(int $id): string
                 <?php endforeach; ?>
             </tbody>
         </table>
+        <button>
+            <a href="add_company_branch.php">Добавить филиал </a>
+        </button>
     </div>
     <script>
         const deleteButtons = document.querySelectorAll('.delete');

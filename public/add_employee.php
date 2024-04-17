@@ -9,15 +9,28 @@ require_once __DIR__ . '/../src/lib/views.php';
 
 function showAddEmployeeForm(?string $errorMessage = null): void
 {
+    $company_branch_id = $_GET['company_branch_id'];
+    if (!is_numeric($company_branch_id)) {
+        writeErrorNotFound();
+        exit();
+    }
+    $connection = connectDatabase();
+    $branchData = findComnanyBranchInDatabase($connection, (int) $company_branch_id);
+
     echo renderView('employee/add_employee_form.php', [
         'errorMessage' => $errorMessage,
-        'company_branch_id' => $_GET['company_branch_id'],
+        'company_branch' => [
+            'company_branch_id' => $company_branch_id,
+            'city' => $branchData['city'],
+            'company_address' => $branchData['company_address']
+        ]
     ]);
 }
 
 function handleAddEmployeeForm(): void
 {
-    $company_branch_id = $_GET['company_branch_id'];;
+    $company_branch_id = $_GET['company_branch_id'];
+    
     $name = $_POST['name'] ?? null;
     $email = $_POST['email'] ?? null;
     $job = $_POST['job'] ?? null;

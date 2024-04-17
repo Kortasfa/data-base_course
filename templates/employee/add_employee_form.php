@@ -16,7 +16,9 @@
 <body>
     <?php
     $links = array(
-        "Вернуться" => "show_branch_company_card.php?company_branch_id=$company_branch_id"
+        "Филиалы" => "index.php",
+        "{$company_branch['city']}, {$company_branch['company_address']}" => "show_branch_company_card.php?company_branch_id={$company_branch['company_branch_id']}",
+        "Добавление сотрудника" => "",
     );
     require (__DIR__ . '/../navigation_bar.php') ?>
     <form class="form" method="post">
