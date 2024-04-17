@@ -13,7 +13,7 @@ function getEmployeeCard(int $employeeId, int $companyBranchId): string
 <html lang="ru">
 
 <head>
-    <title>Company Branch Details</title>
+    <title>Информация о филиале</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="/../public/css/main.css">
@@ -27,18 +27,28 @@ function getEmployeeCard(int $employeeId, int $companyBranchId): string
     );
     require (__DIR__ . '/../navigation_bar.php') ?>
     <div class="container">
-        <div class="info-item">
-            <span class="info-label">Город:</span>
-            <span class="info-value"><?= htmlentities($company_branch['city']) ?></span>
-        </div>
-        <div class="info-item">
-            <span class="info-label">Адрес:</span>
-            <span class="info-value"><?= htmlentities($company_branch['company_address']) ?></span>
-        </div>
-        <div class="info-item">
-            <span class="info-label">Количество сотрудников:</span>
-            <span class="info-value"><?= htmlentities($company_branch['employee_amount']) ?></span>
-        </div>
+        <form method="post">
+            <div>
+                <label for="city">Город</label>
+                <input type="text" name="city" value="<?= htmlentities($company_branch['city']) ?>" id="city" required maxlength="100" />
+            </div>
+            <div>
+                <label for="Address">Адрес</label>
+                <input type="text" name="company_address" value="<?= htmlentities($company_branch['company_address']) ?>" id="address" required maxlength="100" />
+            </div>
+            <div class="info-item">
+                <span class="info-label">Количество сотрудников:</span>
+                <span class="info-value"><?= htmlentities($company_branch['employee_amount']) ?></span>
+            </div>
+            <?php if ($errorMessage): ?>
+                <div>
+                    <p class="form-error"><?= $errorMessage ?></p>
+                </div>
+            <?php endif; ?>
+            <div>
+                <button type="submit">Редактировать</button>
+            </div>
+        </form>
         <table>
             <thead>
                 <tr>

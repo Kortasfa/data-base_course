@@ -2,44 +2,10 @@
 <html lang="ru">
 
 <head>
-    <title>Employee Details</title>
+    <title>Детали о сотруднике</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
-            margin: 0;
-            padding: 0;
-        }
-
-        .container {
-            max-width: 600px;
-            margin: 20px auto;
-            background: #fff;
-            padding: 20px;
-            border-radius: 5px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        }
-
-        .info-item {
-            margin-bottom: 15px;
-        }
-
-        .info-label {
-            font-weight: bold;
-        }
-
-        .info-value {
-            margin-left: 10px;
-        }
-
-        img {
-            vertical-align: middle;
-            height: 20px;
-            width: auto;
-        }
-    </style>
+    <link rel="stylesheet" href="/../public/css/main.css">
 </head>
 
 <body>
@@ -48,36 +14,47 @@
         "Вернуться" => "show_branch_company_card.php?company_branch_id=$company_branch_id"
     );
     require (__DIR__ . '/../navigation_bar.php') ?>
-    <div class="container">
-        <div class="info-item">
-            <span class="info-label">Имя:</span>
-            <span class="info-value"><?= htmlentities($employee['name']) ?></span>
+    <form class="form" method="post">
+        <div>
+            <label for="name">Имя</label>
+            <input type="text" name="name" id="name" value="<?= htmlentities($employee['name']) ?>" required maxlength="100" />
         </div>
-        <div class="info-item">
-            <span class="info-label">Должность:</span>
-            <span class="info-value"><?= htmlentities($employee['job']) ?></span>
+        <div>
+            <label for="job">Должность</label>
+            <input type="text" name="job" id="job" value="<?= htmlentities($employee['job']) ?>" required maxlength="100" />
         </div>
-        <div class="info-item">
-            <span class="info-label">Электронная почта:</span>
-            <span class="info-value"><?= htmlentities($employee['email']) ?></span>
+        <div>
+            <label for="gender">Пол</label>
+            <select id="gender" name="gender">
+                <option value="1">Male</option>
+                <option value="0">Female</option>
+            </select>
         </div>
-        <div class="info-item">
-            <span class="info-label">Пол:</span>
-            <span class="info-value"><?= ($employee['gender']) ? 'male' : 'femal' ?></span>
+        <div>
+            <label for="email">Электронная почта</label>
+            <input type="text" name="email" id="email" value="<?= htmlentities($employee['email']) ?>" required maxlength="100" />
         </div>
-        <div class="info-item">
-            <span class="info-label">Дата рождения:</span>
-            <span class="info-value"><?= htmlentities($employee['birth_date']) ?></span>
+        <div>
+            <label for="birth_date">Дата рождения</label>
+            <input type="date" name="birth_date" id="birth_date" value="<?= htmlentities($employee['birth_date']) ?>" required maxlength="100" />
         </div>
-        <div class="info-item">
-            <span class="info-label">Дата найма:</span>
-            <span class="info-value"><?= htmlentities($employee['hire_date']) ?></span>
+        <div>
+            <label for="hire_date">Дата найма</label>
+            <input type="date" name="hire_date" id="hire_date" value="<?= htmlentities($employee['hire_date']) ?>" required maxlength="100" />
         </div>
-        <div class="info-item">
-            <span class="info-label">Комментарий:</span>
-            <span class="info-value"><?= htmlentities($employee['admin_comment']) ?></span>
+        <div>
+            <label for="admin_comment">Комментарий</label>
+            <textarea id="admin_comment" name="admin_comment" required maxlength="100"><?= htmlentities($employee['admin_comment']) ?></textarea>
         </div>
-    </div>
+        <?php if ($errorMessage): ?>
+            <div>
+                <p class="form-error"><?= $errorMessage ?></p>
+            </div>
+        <?php endif; ?>
+        <div>
+            <button type="submit">Редактировать</button>
+        </div>
+    </form>
 </body>
 
 </html>

@@ -60,6 +60,33 @@ function saveCompanyBranchToDatabase(PDO $connection, array $companyBranchData):
 }
 
 /**
+ * @param PDO $connection
+ * @param array{
+ *     id:int, 
+ *     city:string,
+ *     company_address:string,
+ * } $companyBranchData
+ * @return int
+ */
+function editCompanyBranchToDatabase(PDO $connection, array $companyBranchData): int
+{
+    $query = <<<SQL
+        UPDATE company_branch 
+        SET city = :city, 
+            company_address = :company_address
+        WHERE id = :id
+        SQL;
+    $statement = $connection->prepare($query);
+    $statement->execute([
+        ':id' => $companyBranchData['id'],
+        ':city' => $companyBranchData['city'],
+        ':company_address' => $companyBranchData['company_address'],
+    ]);
+
+    return $statement->rowCount();
+}
+
+/**
  * Извлекает из БД данные поста с указанным ID.
  * Возвращает null, если пост не найден
  *
@@ -169,6 +196,53 @@ function saveEmployeeToDatabase(PDO $connection, array $employeeData): int
 
     return (int)$connection->lastInsertId();
 }
+
+/**
+ * Сохраняет сотрудника в таблицу employee и возвращает ID сотрудника.
+ *
+ * @param PDO $connection
+ * @param array{
+ *     id:int,
+ *     name:string,
+ *     job:string,
+ *     gender:bool,
+ *     email:string,
+ *     x:string,
+ *     hire_date:string,
+ *     admin_comment:?string
+ * } $employeeData
+ *
+ * @return int
+ */
+function editEmployeeToDatabase(PDO $connection, array $employeeData): int
+{
+    $query = <<<SQL
+        UPDATE employee 
+        SET name = :name, 
+            job = :job, 
+            gender = :gender, 
+            email = :email, 
+            birth_date = :birth_date, 
+            hire_date = :hire_date, 
+            admin_comment = :admin_comment
+        WHERE id = :id
+        SQL;
+
+    $statement = $connection->prepare($query);
+    $statement->execute([
+        ':id' => $employeeData['id'],
+        ':name' => $employeeData['name'],
+        ':job' => $employeeData['job'],
+        ':gender' => $employeeData['gender'],
+        ':email' => $employeeData['email'],
+        ':birth_date' => $employeeData['birth_date'],
+        ':hire_date' => $employeeData['hire_date'],
+        ':admin_comment' => $employeeData['admin_comment'] ?? null,
+    ]);
+
+    return $statement->rowCount();
+}
+
 
 /**
  * Извлекает из БД параметры изображения с указанным ID.

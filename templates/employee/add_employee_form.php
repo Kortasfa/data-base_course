@@ -19,7 +19,7 @@
         "Вернуться" => "show_branch_company_card.php?company_branch_id=$company_branch_id"
     );
     require (__DIR__ . '/../navigation_bar.php') ?>
-    <form method="post">
+    <form class="form" method="post">
         <div>
             <label for="name">Имя</label>
             <input type="text" name="name" id="name" required maxlength="100" />

@@ -20,7 +20,7 @@
     );
     require (__DIR__ . '/../navigation_bar.php') 
     ?>
-    <form method="post">
+    <form class="form" method="post">
         <div>
             <label for="city">Город</label>
             <input type="text" name="city" id="city" required maxlength="100" />
