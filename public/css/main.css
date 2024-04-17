@@ -41,7 +41,8 @@ img {
     width: auto;
 }
 
-img, tr:hover {
+img,
+tr:hover {
     cursor: pointer;
 }
 
@@ -80,7 +81,9 @@ label {
     display: block;
 }
 
-input, select, textarea {
+input,
+select,
+textarea {
     width: 100%;
     padding: 8px;
     border: 1px solid #ccc;
@@ -108,4 +111,13 @@ button:hover {
     color: #ff0000;
     margin-top: 5px;
     font-size: 14px;
+}
+
+.image-profile {
+    min-width: 200px;
+    min-height: 200px;
+    max-width: 800px;
+    max-height: 800px;
+    margin-bottom: 10px;
+    display: none;
 }

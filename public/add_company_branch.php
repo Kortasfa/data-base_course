@@ -33,7 +33,6 @@ function handleAddPostForm(): void
     saveCompanyBranchToDatabase($connection, [
         'city' => $city,
         'company_address' => $companyAddress,
-        'employee_amount' => 0
     ]);
 
     writeRedirectSeeOther("index.php");

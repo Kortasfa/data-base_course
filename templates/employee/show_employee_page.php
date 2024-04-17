@@ -54,6 +54,7 @@
             <textarea id="admin_comment" name="admin_comment" required
                 maxlength="100"><?= htmlentities($employee['admin_comment']) ?></textarea>
         </div>
+        <img id="imagePreview" class="image-profile" src="<?= "/public{$employee['image_url']}" ?>" />
         <?php if ($errorMessage): ?>
             <div>
                 <p class="form-error"><?= $errorMessage ?></p>

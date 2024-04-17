@@ -21,7 +21,7 @@
         "Добавление сотрудника" => "",
     );
     require (__DIR__ . '/../navigation_bar.php') ?>
-    <form class="form" method="post">
+    <form class="form" method="post" enctype="multipart/form-data">
         <div>
             <label for="name">Имя</label>
             <input type="text" name="name" id="name" required maxlength="100" />
@@ -53,6 +53,12 @@
             <label for="admin_comment">Комментарий</label>
             <textarea id="admin_comment" name="admin_comment" required maxlength="100"></textarea>
         </div>
+        <div>
+            <label for="image">Фото сотрудника</label>
+            <input name="image" type="file" id="image" required accept="image/webp,image/jpeg"
+                onchange="previewImage(event)" />
+            <img id="imagePreview" src="#" alt="Preview" class="image-profile" />
+        </div>
         <?php if ($errorMessage): ?>
             <div>
                 <p class="form-error"><?= $errorMessage ?></p>
@@ -62,4 +68,24 @@
             <button type="submit">Отправить</button>
         </div>
     </form>
+    <script>
+        function previewImage(event) {
+            var input = event.target;
+            var preview = document.getElementById('imagePreview');
+
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+
+                reader.onload = function (e) {
+                    preview.src = e.target.result;
+                    preview.style.display = 'block';
+                }
+
+                reader.readAsDataURL(input.files[0]);
+            } else {
+                preview.src = "#";
+                preview.style.display = 'none';
+            }
+        }
+    </script>
 </body>

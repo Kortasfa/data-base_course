@@ -38,15 +38,29 @@ function handleAddEmployeeForm(): void
     $birthDate = $_POST['birth_date'] ?? null;
     $hireDate = $_POST['hire_date'] ?? null;
     $adminComment = $_POST['admin_comment'] ?? null;
+    $fileInfo = $_FILES['image'] ?? null;
     if (!$name || !$email || !$job || !$gender || !$birthDate || !$hireDate || !$company_branch_id) {
         showAddEmployeeForm(errorMessage: 'Все поля обязательны для заполнения');
         http_response_code(HTTP_STATUS_400_BAD_REQUEST);
         return;
     }
 
+    try
+    {
+        $imageInfo = uploadImageFile($fileInfo);
+    }
+    catch (InvalidArgumentException $exception)
+    {
+        showAddPostForm(errorMessage: $exception->getMessage());
+        http_response_code(HTTP_STATUS_400_BAD_REQUEST);
+        return;
+    }
+
     $connection = connectDatabase();
+    $imageId = saveImageToDatabase($connection, $imageInfo);
 
     saveEmployeeToDatabase($connection, [
+        'image_id' => $imageId,
         'company_branch_id' => $company_branch_id,
         'name' => $name,
         'email' => $email,

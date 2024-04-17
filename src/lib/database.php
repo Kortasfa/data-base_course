@@ -45,15 +45,14 @@ function saveCompanyBranchToDatabase(PDO $connection, array $companyBranchData):
 {
     $query = <<<SQL
         INSERT INTO company_branch
-          (city, company_address, employee_amount)
+          (city, company_address)
         VALUES
-          (:city, :company_address, :employee_amount)
+          (:city, :company_address)
         SQL;
     $statement = $connection->prepare($query);
     $statement->execute([
         ':city' => $companyBranchData['city'],
         ':company_address' => $companyBranchData['company_address'],
-        ':employee_amount' => $companyBranchData['employee_amount'],
     ]);
 
     return (int)$connection->lastInsertId();
@@ -105,8 +104,7 @@ function findComnanyBranchInDatabase(PDO $connection, int $id): ?array
         SELECT
             id,
             city,
-            company_address,
-            employee_amount
+            company_address
         FROM company_branch
         WHERE id = $id
         SQL;
@@ -178,13 +176,14 @@ function getAllCompanyBranches(PDO $connection): array
 function saveEmployeeToDatabase(PDO $connection, array $employeeData): int
 {
     $query = <<<SQL
-        INSERT INTO employee (company_branch_id, name, job, gender, email, birth_date, hire_date, admin_comment)
-        VALUES (:company_branch_id, :name, :job, :gender, :email, :birth_date, :hire_date, :admin_comment)
+        INSERT INTO employee (company_branch_id, image_id, name, job, gender, email, birth_date, hire_date, admin_comment)
+        VALUES (:company_branch_id, :image_id, :name, :job, :gender, :email, :birth_date, :hire_date, :admin_comment)
         SQL;
 
     $statement = $connection->prepare($query);
     $statement->execute([
         ':company_branch_id' => $employeeData['company_branch_id'],
+        ':image_id' => $employeeData['image_id'],
         ':name' => $employeeData['name'],
         ':job' => $employeeData['job'],
         ':gender' => $employeeData['gender'],
@@ -268,6 +267,7 @@ function findEmployeeInDatabase(PDO $connection, int $id): ?array
         SELECT
             id,
             company_branch_id,
+            image_id,
             name,
             job,
             gender,
@@ -366,4 +366,65 @@ function countStudentAmount(PDO $connection): array
         $result[$row['company_branch_id']] = $row['employee_count'];
     }
     return $result;
+}
+
+/**
+ * @param PDO $connection
+ * @param array{
+ *     path:string,
+ *     width:int,
+ *     height:int,
+ *     mime_type:string
+ * } $imageData
+ * @return int
+ */
+function saveImageToDatabase(PDO $connection, array $imageData): int
+{
+    $query = <<<SQL
+        INSERT INTO image
+          (path, width, height, mime_type)
+        VALUES
+          (:path, :width, :height, :mime_type)
+        SQL;
+    $statement = $connection->prepare($query);
+    $statement->execute([
+        ':path' => $imageData['path'],
+        ':width' => $imageData['width'],
+        ':height' => $imageData['height'],
+        ':mime_type' => $imageData['mime_type']
+    ]);
+
+    return (int)$connection->lastInsertId();
+}
+
+/**
+ * Извлекает из БД параметры изображения с указанным ID.
+ * Возвращает null, если параметры изображения не найдены
+ *
+ * @param PDO $connection
+ * @param int $id
+ * @return null|array{
+ *     path:string,
+ *     width:int,
+ *     height:int,
+ *     mime_type:string
+ * }
+ */
+function findImageInDatabase(PDO $connection, int $id): ?array
+{
+    $query = <<<SQL
+        SELECT
+            id,
+            path,
+            width,
+            height,
+            mime_type
+        FROM image
+        WHERE id = $id
+        SQL;
+
+    $statement = $connection->query($query);
+    $row = $statement->fetch(PDO::FETCH_ASSOC);
+
+    return $row ?: null;
 }

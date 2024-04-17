@@ -47,10 +47,13 @@ function getBranchCompanyCard(int $id): string
             </thead>
             <tbody>
                 <?php foreach ($company_branches as $branch): ?>
-                    <tr onclick="window.location='<?= getBranchCompanyCard($branch['id']) ?>'">
-                        <td><?= htmlentities($branch['city']) ?></td>
-                        <td><?= htmlentities($branch['company_address']) ?></td>
-                        <td><?= htmlentities($employee_amount[$branch['id']]) ?></td>
+                    <tr>
+                        <td onclick="window.location='<?= getBranchCompanyCard($branch['id']) ?>'">
+                            <?= htmlentities($branch['city']) ?></td>
+                        <td onclick="window.location='<?= getBranchCompanyCard($branch['id']) ?>'">
+                            <?= htmlentities($branch['company_address']) ?></td>
+                        <td onclick="window.location='<?= getBranchCompanyCard($branch['id']) ?>'">
+                            <?= htmlentities($employee_amount[$branch['id']]) ?></td>
                         <td><img class='delete' src='img/delete.png' data-id="<?= $branch['id'] ?>" /></td>
                     </tr>
                 <?php endforeach; ?>

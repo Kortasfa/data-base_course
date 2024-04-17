@@ -61,9 +61,13 @@ function getEmployeeCard(int $employeeId, int $companyBranchId): string
             </thead>
             <tbody>
                 <?php foreach ($employee_data as $employee): ?>
-                    <tr onclick="window.location='<?= getEmployeeCard($employee['id'], $company_branch['company_branch_id']) ?>'">
-                        <td><?= htmlentities($employee['name']) ?></td>
-                        <td><?= htmlentities($employee['job']) ?></td>
+                    <tr>
+                        <td
+                            onclick="window.location='<?= getEmployeeCard($employee['id'], $company_branch['company_branch_id']) ?>'">
+                            <?= htmlentities($employee['name']) ?></td>
+                        <td
+                            onclick="window.location='<?= getEmployeeCard($employee['id'], $company_branch['company_branch_id']) ?>'">
+                            <?= htmlentities($employee['job']) ?></td>
                         <td><img class='delete' src='img/delete.png' data-id="<?= $employee['id'] ?>" /></td>
                     </tr>
                 <?php endforeach; ?>

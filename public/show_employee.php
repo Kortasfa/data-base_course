@@ -5,6 +5,7 @@ require_once __DIR__ . '/../src/lib/request.php';
 require_once __DIR__ . '/../src/lib/response.php';
 require_once __DIR__ . '/../src/lib/database.php';
 require_once __DIR__ . '/../src/lib/views.php';
+require_once __DIR__ . '/../src/lib/uploads.php';
 
 function showEmployeePostForm(?string $errorMessage = null): void
 {
@@ -17,6 +18,13 @@ function showEmployeePostForm(?string $errorMessage = null): void
 
     $connection = connectDatabase();
     $branchData = findComnanyBranchInDatabase($connection, (int) $company_branch_id);
+    $imageData = findImageInDatabase($connection, (int) $employeeId);
+    if (!$imageData)
+    {
+        writeErrorNotFound();
+        exit();
+    }
+    $imageUrlPath = getUploadUrlPath($imageData['path']);
 
     $employeeData = findEmployeeInDatabase($connection, (int) $employeeId);
     if (!$employeeData) {
@@ -33,6 +41,7 @@ function showEmployeePostForm(?string $errorMessage = null): void
             'birth_date' => $employeeData['birth_date'],
             'hire_date' => $employeeData['hire_date'],
             'admin_comment' => $employeeData['admin_comment'],
+            'image_url' => $imageUrlPath,
         ],
         'company_branch' => [
             'company_branch_id' => $company_branch_id,
@@ -42,7 +51,7 @@ function showEmployeePostForm(?string $errorMessage = null): void
     ]);
 }
 
-function handleShowEmployee(): void
+function handleEmployeePostForm(): void
 {
     $company_branch_id = $_GET['company_branch_id'];
     $employee_id = $_GET['employee_id'];
@@ -53,12 +62,26 @@ function handleShowEmployee(): void
     $birthDate = $_POST['birth_date'] ?? null;
     $hireDate = $_POST['hire_date'] ?? null;
     $adminComment = $_POST['admin_comment'] ?? null;
+    $fileInfo = $_FILES['image'] ?? null;
     if (!$name || !$email || !$job || !$gender || !$birthDate || !$hireDate || !$employee_id) {
         showEmployeePostForm(errorMessage: 'Все поля обязательны для заполнения');
         http_response_code(HTTP_STATUS_400_BAD_REQUEST);
         return;
     }
+    try
+    {
+        $imageInfo = uploadImageFile($fileInfo);
+    }
+    catch (InvalidArgumentException $exception)
+    {
+        showAddPostForm(errorMessage: $exception->getMessage());
+        http_response_code(HTTP_STATUS_400_BAD_REQUEST);
+        return;
+    }
+
     $connection = connectDatabase();
+    $imageId = saveImageToDatabase($connection, $imageInfo);
+
     editEmployeeToDatabase($connection, [
         'id' => $employee_id,
         'name' => $name,
@@ -76,7 +99,7 @@ try {
     if (isRequestHttpMethod(HTTP_METHOD_GET)) {
         showEmployeePostForm();
     } elseif (isRequestHttpMethod(HTTP_METHOD_POST)) {
-        handleShowEmployee();
+        handleEmployeePostForm();
     } else {
         writeRedirectSeeOther($_SERVER['REQUEST_URI']);
     }
