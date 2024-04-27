@@ -98,7 +98,7 @@ function editCompanyBranchToDatabase(PDO $connection, array $companyBranchData):
  *     employee_amount:int,
  * }|null
  */
-function findComnanyBranchInDatabase(PDO $connection, int $id): ?array
+function findComnanyBranchInDatabase(PDO $connection, int $id): ?array //TODO поправить опечатку
 {
     $query = <<<SQL
         SELECT
@@ -213,7 +213,7 @@ function saveEmployeeToDatabase(PDO $connection, array $employeeData): int
  *
  * @return int
  */
-function editEmployeeToDatabase(PDO $connection, array $employeeData): int
+function editEmployeeToDatabase(PDO $connection, array $employeeData): int //TODO in
 {
     $query = <<<SQL
         UPDATE employee 
@@ -351,9 +351,9 @@ function countAllEmployeesFromCompanyBranch(PDO $connection, int $id): int
  *
  * @param PDO $connection
  *
- * @return array
+ * @return array<int, int> - отображает id филиала на число сотрудников
  */
-function countStudentAmount(PDO $connection): array
+function countEmployeeAmount(PDO $connection): array //TODO именование неверное
 {
     $query = <<<SQL
     SELECT company_branch_id, COUNT(id) AS employee_count
