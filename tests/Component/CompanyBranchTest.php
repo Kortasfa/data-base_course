@@ -48,6 +48,7 @@ class CompanyBranchTest extends AbstractDatabaseTestCase
         $data = deleteComnanyBranchInDatabase($connection, $branchId);
         $this->assertEquals($data, null);
     }
+    
     public function testEditCompanyBranchToDatabase(): void
     {
         $connection = \connectDatabase();
