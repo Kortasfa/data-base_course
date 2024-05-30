@@ -15,7 +15,7 @@ function showCompanyBranchForm(?string $errorMessage = null): void
     }
 
     $connection = connectDatabase();
-    $branchData = findComnanyBranchInDatabase($connection, (int) $companyBranchId);
+    $branchData = findCompanyBranchInDatabase($connection, (int) $companyBranchId);
     $employeeAmount = countAllEmployeesFromCompanyBranch($connection, (int) $companyBranchId);
 
     $employeeData = findAllEmployeesFromCompanyBranch($connection, (int) $companyBranchId);

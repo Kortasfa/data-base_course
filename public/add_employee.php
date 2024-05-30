@@ -15,7 +15,7 @@ function showAddEmployeeForm(?string $errorMessage = null): void
         exit();
     }
     $connection = connectDatabase();
-    $branchData = findComnanyBranchInDatabase($connection, (int) $company_branch_id);
+    $branchData = findCompanyBranchInDatabase($connection, (int) $company_branch_id);
 
     echo renderView('employee/add_employee_form.php', [
         'errorMessage' => $errorMessage,

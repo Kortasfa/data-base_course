@@ -17,7 +17,7 @@ function showEmployeePostForm(?string $errorMessage = null): void
     }
 
     $connection = connectDatabase();
-    $branchData = findComnanyBranchInDatabase($connection, (int) $company_branch_id);
+    $branchData = findCompanyBranchInDatabase($connection, (int) $company_branch_id);
     $imageData = findImageInDatabase($connection, (int) $employeeId);
     if (!$imageData)
     {

@@ -98,7 +98,7 @@ function editCompanyBranchToDatabase(PDO $connection, array $companyBranchData):
  *     employee_amount:int,
  * }|null
  */
-function findComnanyBranchInDatabase(PDO $connection, int $id): ?array //TODO поправить опечатку
+function findCompanyBranchInDatabase(PDO $connection, int $id): ?array
 {
     $query = <<<SQL
         SELECT
@@ -166,7 +166,7 @@ function getAllCompanyBranches(PDO $connection): array
  *     job:string,
  *     gender:bool,
  *     email:string,
- *     x:string,
+ *     birth_date:string,
  *     hire_date:string,
  *     admin_comment:?string
  * } $employeeData

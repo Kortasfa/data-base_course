@@ -5,6 +5,12 @@ namespace App\Tests\Common;
 
 use PHPUnit\Framework\TestCase;
 
+putenv('APP_ENV=test');
+
+require_once __DIR__ . '/../../vendor/autoload.php';
+
+require_once __DIR__ . '/../../src/lib/database.php';
+
 abstract class AbstractDatabaseTestCase extends TestCase
 {
     private \PDO $connection;
